@@ -100,17 +100,19 @@ export const SalesBillingPage = () => {
 
   const handleAddMedicine = (product) => {
     if (product.stockQty <= 0) {
-      triggerToast(`Product "${product.productName}" is out of stock!`, 'error');
+      triggerToast(`Product batch "${product.batchNumber}" is out of stock!`, 'error');
       return;
     }
 
-    // Check if product already added
-    const existingIndex = billingItems.findIndex(item => item.productId === product.productId);
+    // Check if product batch already added
+    const existingIndex = billingItems.findIndex(
+      item => item.productId === product.productId && item.batchNumber === product.batchNumber
+    );
     if (existingIndex > -1) {
       const updated = [...billingItems];
       const newQty = updated[existingIndex].quantity + 1;
       if (newQty > product.stockQty) {
-        triggerToast(`Cannot exceed available stock of ${product.stockQty} for ${product.productName}.`, 'error');
+        triggerToast(`Cannot exceed available batch stock of ${product.stockQty} for ${product.productName} (Batch: ${product.batchNumber}).`, 'error');
         return;
       }
       updated[existingIndex].quantity = newQty;
@@ -122,6 +124,8 @@ export const SalesBillingPage = () => {
           productId: product.productId,
           productName: product.productName,
           genericName: product.genericName,
+          batchNumber: product.batchNumber,
+          expiryDate: product.expiryDate,
           mrp: Number(product.mrp),
           taxPercent: Number(product.taxPercent || 0),
           stockQty: product.stockQty,
@@ -133,7 +137,7 @@ export const SalesBillingPage = () => {
 
     setMedSearch('');
     setShowDropdown(false);
-    triggerToast(`Added ${product.productName} to billing list.`);
+    triggerToast(`Added ${product.productName} (Batch: ${product.batchNumber}) to billing list.`);
   };
 
   const handleQuantityChange = (index, value) => {
@@ -221,6 +225,7 @@ export const SalesBillingPage = () => {
       discountAmount: Number(invoiceDiscount),
       items: billingItems.map(it => ({
         productId: it.productId,
+        batchNumber: it.batchNumber,
         quantity: it.quantity,
         discountAmount: Number(it.discountAmount)
       }))
@@ -394,26 +399,53 @@ export const SalesBillingPage = () => {
                     No matching products found.
                   </div>
                 ) : (
-                  (productData?.products || []).map(prod => {
-                    const isOutOfStock = prod.stockQty <= 0;
+                  (productData?.products || []).flatMap(prod => {
+                    const productBatches = prod.batches || [];
+                    if (productBatches.length === 0) {
+                      return [{
+                        productId: prod.productId,
+                        productName: prod.productName,
+                        genericName: prod.genericName,
+                        taxPercent: prod.taxPercent,
+                        batchNumber: 'NO BATCH',
+                        expiryDate: 'N/A',
+                        stockQty: 0,
+                        mrp: Number(prod.mrp)
+                      }];
+                    }
+                    return productBatches.map(batch => ({
+                      productId: prod.productId,
+                      productName: prod.productName,
+                      genericName: prod.genericName,
+                      taxPercent: prod.taxPercent,
+                      batchNumber: batch.batchNumber,
+                      expiryDate: batch.expiryDate,
+                      stockQty: batch.stockQty,
+                      mrp: Number(batch.mrp)
+                    }));
+                  }).map((item, idx) => {
+                    const isOutOfStock = item.stockQty <= 0;
+                    const displayKey = `${item.productId}-${item.batchNumber}-${idx}`;
                     return (
                       <div
-                        key={prod.productId}
-                        onClick={() => !isOutOfStock && handleAddMedicine(prod)}
+                        key={displayKey}
+                        onClick={() => !isOutOfStock && handleAddMedicine(item)}
                         className={`px-4 py-2 hover:bg-slate-50 cursor-pointer flex justify-between items-center transition ${
                           isOutOfStock ? 'opacity-55 cursor-not-allowed bg-red-50/20' : ''
                         }`}
                       >
                         <div>
-                          <strong className="text-textMain text-xs block">{prod.productName}</strong>
-                          <span className="text-[10px] text-textSub block mt-0.5">{prod.genericName || 'No salt formula'}</span>
+                          <strong className="text-textMain text-xs block">{item.productName}</strong>
+                          <span className="text-[10px] text-textSub block mt-0.5">
+                            {item.genericName || 'No salt'} • Batch: <strong className="font-mono">{item.batchNumber}</strong> (Exp: {item.expiryDate})
+                          </span>
                         </div>
                         <div className="text-right text-xs">
-                          <span className="block font-bold text-textMain">₹{Number(prod.mrp).toFixed(2)}</span>
+                          <span className="block font-bold text-textMain">₹{item.mrp.toFixed(2)}</span>
                           <span className={`text-[10px] font-semibold mt-0.5 block ${
-                            isOutOfStock ? 'text-destructive' : prod.stockQty < (prod.lowStockLevel || 10) ? 'text-amber-600' : 'text-emerald-600'
+                            isOutOfStock ? 'text-destructive' : 'text-emerald-600'
                           }`}>
-                            {isOutOfStock ? 'OUT OF STOCK' : `Stock: ${prod.stockQty} units`}
+                            {isOutOfStock ? 'OUT OF STOCK' : `Stock: ${item.stockQty} units`}
                           </span>
                         </div>
                       </div>
@@ -453,11 +485,13 @@ export const SalesBillingPage = () => {
                 {billingItems.map((item, index) => {
                   const lineTotal = (item.mrp * item.quantity) - Number(item.discountAmount);
                   return (
-                    <tr key={item.productId} className="hover:bg-slate-50/50 group h-[38px]">
+                    <tr key={`${item.productId}-${item.batchNumber}`} className="hover:bg-slate-50/50 group h-[38px]">
                       <td className="px-4 py-1.5 text-center text-textSub font-medium">{index + 1}</td>
                       <td className="px-4 py-1.5">
                         <strong className="text-textMain block font-bold leading-normal">{item.productName}</strong>
-                        <span className="text-[10px] text-textSub block leading-none mt-0.5">{item.genericName}</span>
+                        <span className="text-[10px] text-textSub block leading-none mt-0.5">
+                          {item.genericName} • Batch: <strong className="font-mono">{item.batchNumber}</strong> (Exp: {item.expiryDate})
+                        </span>
                       </td>
                       <td className="px-4 py-1.5 text-center text-textSub font-mono font-semibold">{item.taxPercent}%</td>
                       <td className="px-4 py-1.5 text-right font-mono text-textMain">₹{item.mrp.toFixed(2)}</td>

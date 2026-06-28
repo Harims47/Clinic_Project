@@ -174,7 +174,7 @@ describe('Purchase & Stock Inward APIs Integration Tests', () => {
       expect(res.statusCode).toBe(201);
       expect(res.body.status).toBe('success');
       expect(mockProduct.stockQty).toBe(150); // added 100
-      expect(mockProduct.mrp).toBe(112.00); // updated product MRP to newest batch retail MRP
+      expect(mockProduct.mrp).toBe(100.00); // MRP is NOT overwritten, stays at original value
       expect(ProductBatch.create).toHaveBeenCalledWith(
         expect.objectContaining({
           productId: 10,

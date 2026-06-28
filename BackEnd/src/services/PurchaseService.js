@@ -99,9 +99,6 @@ export class PurchaseService {
 
         // 3. Update global product inventory
         product.stockQty = previousProductStock + quantity;
-        
-        // Update product MRP to match latest purchase batch retail price
-        product.mrp = mrp;
         await product.save({ transaction });
 
         // Calculate GST Purchase totals (Purchase Rate + taxPercent GST)

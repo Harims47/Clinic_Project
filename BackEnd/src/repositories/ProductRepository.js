@@ -3,6 +3,7 @@ import Product from '../models/Product.js';
 import Manufacturer from '../models/Manufacturer.js';
 import HsnCode from '../models/HsnCode.js';
 import User from '../models/User.js';
+import ProductBatch from '../models/ProductBatch.js';
 
 export class ProductRepository {
   async create(productData, transaction) {
@@ -15,7 +16,8 @@ export class ProductRepository {
         { model: Manufacturer, as: 'manufacturer', attributes: ['mfrId', 'mfrName'] },
         { model: HsnCode, as: 'hsn', attributes: ['hsnId', 'hsnCode', 'description'] },
         { model: User, as: 'creator', attributes: ['userId', 'username', 'role'] },
-        { model: User, as: 'editor', attributes: ['userId', 'username', 'role'] }
+        { model: User, as: 'editor', attributes: ['userId', 'username', 'role'] },
+        { model: ProductBatch, as: 'batches', attributes: ['batchId', 'batchNumber', 'expiryDate', 'stockQty', 'mrp'] }
       ]
     });
   }
@@ -44,7 +46,8 @@ export class ProductRepository {
       order,
       include: [
         { model: Manufacturer, as: 'manufacturer', attributes: ['mfrId', 'mfrName'] },
-        { model: HsnCode, as: 'hsn', attributes: ['hsnId', 'hsnCode'] }
+        { model: HsnCode, as: 'hsn', attributes: ['hsnId', 'hsnCode'] },
+        { model: ProductBatch, as: 'batches', attributes: ['batchId', 'batchNumber', 'expiryDate', 'stockQty', 'mrp'] }
       ]
     });
   }

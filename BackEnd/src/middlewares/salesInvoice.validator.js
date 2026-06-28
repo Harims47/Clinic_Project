@@ -30,6 +30,13 @@ export const validateSalesInvoice = [
     .isInt()
     .withMessage('productId must be an integer'),
 
+  body('items.*.batchNumber')
+    .exists()
+    .withMessage('batchNumber is required')
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage('batchNumber cannot be empty'),
+
   body('items.*.quantity')
     .isInt({ min: 1 })
     .withMessage('quantity must be a positive integer'),
