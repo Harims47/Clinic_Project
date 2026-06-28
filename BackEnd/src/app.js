@@ -9,6 +9,8 @@ import { patientRoutes } from './routes/patient.routes.js';
 import { productRoutes } from './routes/product.routes.js';
 import { queueTokenRoutes } from './routes/queueToken.routes.js';
 import salesInvoiceRoutes from './routes/salesInvoice.routes.js';
+import { supplierRoutes } from './routes/supplier.routes.js';
+import { purchaseRoutes } from './routes/purchase.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -50,6 +52,8 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/tokens', queueTokenRoutes);
 app.use('/api/invoices', salesInvoiceRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/purchase', purchaseRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

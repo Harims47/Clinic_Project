@@ -10,6 +10,9 @@ import ProductListPage from './features/products/pages/ProductListPage.jsx';
 import QueueDashboardPage from './features/tokens/pages/QueueDashboardPage.jsx';
 import SalesBillingPage from './features/sales/pages/SalesBillingPage.jsx';
 import InvoiceListPage from './features/sales/pages/InvoiceListPage.jsx';
+import SuppliersPage from './features/suppliers/pages/SuppliersPage.jsx';
+import PurchaseInwardPage from './features/purchase/pages/PurchaseInwardPage.jsx';
+import PurchaseHistoryPage from './features/purchase/pages/PurchaseHistoryPage.jsx';
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient({
@@ -57,6 +60,9 @@ export const App = () => {
               <Route path="tokens" element={<QueueDashboardPage />} />
               <Route path="sales" element={<SalesBillingPage />} />
               <Route path="invoices" element={<InvoiceListPage />} />
+              <Route path="suppliers" element={<SuppliersPage />} />
+              <Route path="purchase" element={<PurchaseInwardPage />} />
+              <Route path="purchase/history" element={<PurchaseHistoryPage />} />
             </Route>
 
             {/* Redirection fallback */}

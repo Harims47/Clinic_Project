@@ -12,6 +12,8 @@ import {
   ShoppingCart, 
   FileText,
   Receipt,
+  Truck,
+  History,
   User
 } from 'lucide-react';
 
@@ -33,7 +35,9 @@ export const DashboardLayout = () => {
     { name: 'Token Queue', path: '/tokens', icon: ClipboardList },
     { name: 'Sales POS Billing', path: '/sales', icon: FileText },
     { name: 'Billing Ledger', path: '/invoices', icon: Receipt },
-    { name: 'Purchase Inward', path: '/purchase', icon: ShoppingCart, disabled: true }
+    { name: 'Purchase Inward', path: '/purchase', icon: ShoppingCart },
+    { name: 'Purchase Ledger', path: '/purchase/history', icon: History },
+    { name: 'Suppliers Directory', path: '/suppliers', icon: Truck }
   ];
 
   return (
