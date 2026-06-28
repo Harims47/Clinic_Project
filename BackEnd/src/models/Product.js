@@ -122,7 +122,15 @@ const Product = sequelize.define('Product', {
   tableName: 'Products',
   timestamps: true,
   createdAt: 'CreatedAt',
-  updatedAt: 'UpdatedAt'
+  updatedAt: 'UpdatedAt',
+  indexes: [
+    {
+      fields: ['ProductName']
+    },
+    {
+      fields: ['GenericName']
+    }
+  ]
 });
 
 // Setup relationships (safeguarded against vitest mock imports)

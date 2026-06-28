@@ -83,7 +83,21 @@ const QueueToken = sequelize.define('QueueToken', {
   tableName: 'QueueTokens',
   timestamps: true,
   createdAt: 'CreatedAt',
-  updatedAt: 'UpdatedAt'
+  updatedAt: 'UpdatedAt',
+  indexes: [
+    {
+      fields: ['TokenDate']
+    },
+    {
+      fields: ['DoctorId']
+    },
+    {
+      fields: ['PatientId']
+    },
+    {
+      fields: ['DoctorId', 'TokenDate']
+    }
+  ]
 });
 
 // Setup relationships (safeguarded against vitest mock imports)

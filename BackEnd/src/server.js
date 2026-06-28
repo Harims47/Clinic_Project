@@ -1,10 +1,19 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' }); // Load .env parameters from parent root first
+
+// Enforce environment validation immediately
+const REQUIRED_ENVS = ['JWT_SECRET', 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_NAME'];
+for (const envVar of REQUIRED_ENVS) {
+  if (!process.env[envVar]) {
+    console.error(`[CRITICAL CONFIGURATION ERROR] Required environment variable "${envVar}" is missing. Exiting...`);
+    process.exit(1);
+  }
+}
+
 import app from './app.js';
 import sequelize from './config/database.js';
 import logger from './config/logger.js';
 import seedDatabase from './config/seed.js';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '../.env' }); // Load .env parameters from parent root
 
 const PORT = process.env.PORT || 5000;
 

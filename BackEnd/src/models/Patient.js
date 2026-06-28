@@ -124,7 +124,15 @@ const Patient = sequelize.define('Patient', {
       const code = `PAT-${String(patient.patientId).padStart(5, '0')}`;
       await patient.update({ patientCode: code }, { transaction: options.transaction });
     }
-  }
+  },
+  indexes: [
+    {
+      fields: ['Phone']
+    },
+    {
+      fields: ['Name']
+    }
+  ]
 });
 
 // Setup relationships (safeguarded against mock import errors during unit tests)
