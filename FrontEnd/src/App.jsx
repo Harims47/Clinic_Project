@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard.jsx';
 import PatientListPage from './features/patients/pages/PatientListPage.jsx';
 import ProductListPage from './features/products/pages/ProductListPage.jsx';
 import QueueDashboardPage from './features/tokens/pages/QueueDashboardPage.jsx';
+import SalesBillingPage from './features/sales/pages/SalesBillingPage.jsx';
+import InvoiceListPage from './features/sales/pages/InvoiceListPage.jsx';
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient({
@@ -53,6 +55,8 @@ export const App = () => {
               <Route path="patients" element={<PatientListPage />} />
               <Route path="products" element={<ProductListPage />} />
               <Route path="tokens" element={<QueueDashboardPage />} />
+              <Route path="sales" element={<SalesBillingPage />} />
+              <Route path="invoices" element={<InvoiceListPage />} />
             </Route>
 
             {/* Redirection fallback */}

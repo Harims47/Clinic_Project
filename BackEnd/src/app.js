@@ -8,6 +8,7 @@ import { authRoutes } from './routes/auth.routes.js';
 import { patientRoutes } from './routes/patient.routes.js';
 import { productRoutes } from './routes/product.routes.js';
 import { queueTokenRoutes } from './routes/queueToken.routes.js';
+import salesInvoiceRoutes from './routes/salesInvoice.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,6 +49,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/tokens', queueTokenRoutes);
+app.use('/api/invoices', salesInvoiceRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

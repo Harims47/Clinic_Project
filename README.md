@@ -71,3 +71,28 @@ The system automatically creates a default administrative profile upon backend b
 * **Username**: `admin`
 * **Password**: `admin123`
 * **Role**: `ADMIN`
+
+
+# Changelog
+
+## v0.1.0
+
+### Added
+
+- Authentication
+- Patient Management
+- Product Inventory
+- Reception Queue
+
+### Improved
+
+- Dense Clinical UI
+- Keyboard Navigation
+- Global Search
+- Thermal Printing
+
+### Fixed
+
+- JWT startup validation
+- Database constraint errors
+- Search indexing
