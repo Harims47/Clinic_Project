@@ -27,8 +27,8 @@ export const DashboardLayout = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Patient Register', path: '/patients', icon: Users, disabled: true },
-    { name: 'Product Inventory', path: '/products', icon: Package, disabled: true },
+    { name: 'Patient Register', path: '/patients', icon: Users },
+    { name: 'Product Inventory', path: '/products', icon: Package },
     { name: 'Token Queue', path: '/tokens', icon: ClipboardList, disabled: true },
     { name: 'Purchase Inward', path: '/purchase', icon: ShoppingCart, disabled: true },
     { name: 'Sales POS Billing', path: '/sales', icon: FileText, disabled: true }

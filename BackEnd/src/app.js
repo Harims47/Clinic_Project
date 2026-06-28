@@ -2,8 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { authRoutes } from './routes/auth.routes.js';
+import { patientRoutes } from './routes/patient.routes.js';
+import { productRoutes } from './routes/product.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -16,6 +23,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Serve static upload files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Apply basic rate limiter constraints
 const limiter = rateLimit({
@@ -34,6 +44,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Register routes
 app.use('/api/auth', authRoutes);
+app.use('/api/patients', patientRoutes);
+app.use('/api/products', productRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

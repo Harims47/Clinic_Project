@@ -37,7 +37,23 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('/api/auth/login', { username, password });
       const { data } = response.data;
-      setToken(data.token);
+      const newToken = data.token;
+
+      // Set Axios auth header immediately to prevent network race conditions
+      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      localStorage.setItem('token', newToken);
+
+      // Parse payload context from JWT and set User state synchronously
+      const payload = JSON.parse(atob(newToken.split('.')[1]));
+      const userSession = {
+        userId: payload.userId,
+        username: payload.username,
+        role: payload.role
+      };
+
+      setUser(userSession);
+      setToken(newToken);
+
       return { success: true };
     } catch (error) {
       const message = error.response?.data?.message || 'Login request failed';

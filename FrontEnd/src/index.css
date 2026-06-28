@@ -7,3 +7,58 @@
     @apply bg-background text-textMain font-sans antialiased;
   }
 }
+
+/* Reusable Clinical CSS Components */
+@layer utilities {
+  /* High-density layout table overrides */
+  .table-dense th {
+    @apply px-4 py-2.5 text-[11px] font-semibold uppercase text-textSub tracking-wider border-b border-border bg-slate-50/80;
+  }
+  
+  .table-dense td {
+    @apply px-4 py-2 text-[13px] text-textMain border-b border-border/60;
+  }
+
+  /* Keyboard shortcut keycap badges */
+  .kbd-keycap {
+    @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold font-mono bg-slate-100 text-slate-500 border border-slate-200 rounded shadow-sm select-none;
+  }
+
+  /* Right-side Slide-in Drawer transition */
+  .drawer-container {
+    @apply fixed inset-y-0 right-0 w-[480px] bg-surface border-l border-border shadow-lg flex flex-col z-50 transform transition-transform duration-200;
+  }
+
+  /* Status Chips */
+  .status-chip {
+    @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .status-dot {
+    @apply h-1.5 w-1.5 rounded-full;
+  }
+
+  /* Standard Forms inputs */
+  .form-group-header {
+    @apply text-xs font-bold text-primary uppercase tracking-wider pb-2 border-b border-border mb-4 flex items-center gap-1.5;
+  }
+}
+
+/* Animations */
+@keyframes successFlash {
+  0% { background-color: rgba(142, 222, 180, 0.4); }
+  100% { background-color: transparent; }
+}
+
+.row-flash-success {
+  animation: successFlash 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.drawer-slide-in {
+  animation: slideInRight 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

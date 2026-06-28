@@ -7,17 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "hsl(220, 20%, 98%)",
+        background: "hsl(220, 20%, 97%)",
         surface: "hsl(0, 0%, 100%)",
-        border: "hsl(220, 15%, 90%)",
+        border: "hsl(214, 32%, 91%)",
         primary: {
-          DEFAULT: "hsl(217, 91%, 50%)",
-          hover: "hsl(217, 91%, 42%)"
+          DEFAULT: "hsl(221, 83%, 45%)",
+          hover: "hsl(221, 83%, 37%)"
         },
         secondary: "hsl(215, 16%, 47%)",
-        success: "hsl(142, 72%, 29%)",
+        success: "hsl(142, 76%, 36%)",
         warning: "hsl(38, 92%, 50%)",
-        destructive: "hsl(0, 84%, 60%)",
+        destructive: "hsl(354, 70%, 54%)",
         textMain: "hsl(222, 47%, 11%)",
         textSub: "hsl(215, 16%, 47%)"
       },
