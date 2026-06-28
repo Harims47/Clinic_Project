@@ -7,6 +7,7 @@ import Login from './pages/Login.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import PatientListPage from './features/patients/pages/PatientListPage.jsx';
 import ProductListPage from './features/products/pages/ProductListPage.jsx';
+import QueueDashboardPage from './features/tokens/pages/QueueDashboardPage.jsx';
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient({
@@ -51,6 +52,7 @@ export const App = () => {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="patients" element={<PatientListPage />} />
               <Route path="products" element={<ProductListPage />} />
+              <Route path="tokens" element={<QueueDashboardPage />} />
             </Route>
 
             {/* Redirection fallback */}

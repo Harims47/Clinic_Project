@@ -29,7 +29,7 @@ export const DashboardLayout = () => {
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Patient Register', path: '/patients', icon: Users },
     { name: 'Product Inventory', path: '/products', icon: Package },
-    { name: 'Token Queue', path: '/tokens', icon: ClipboardList, disabled: true },
+    { name: 'Token Queue', path: '/tokens', icon: ClipboardList },
     { name: 'Purchase Inward', path: '/purchase', icon: ShoppingCart, disabled: true },
     { name: 'Sales POS Billing', path: '/sales', icon: FileText, disabled: true }
   ];

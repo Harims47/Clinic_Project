@@ -1,15 +1,37 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { ClipboardList, Users, Package, ShoppingCart } from 'lucide-react';
+import { ClipboardList, Users, Package, ShoppingCart, Loader2 } from 'lucide-react';
+import { useDashboardStats } from '../features/tokens/hooks/useQueue.js';
 
 export const Dashboard = () => {
   const { user } = useAuth();
+  const { data: stats, isLoading, isError } = useDashboardStats();
 
   const cards = [
-    { name: "Today's Tokens", count: '0', icon: ClipboardList, color: 'text-blue-600 bg-blue-50' },
-    { name: "Today's Patients", count: '0', icon: Users, color: 'text-green-600 bg-green-50' },
-    { name: "Low Stock Items", count: '0', icon: Package, color: 'text-amber-600 bg-amber-50' },
-    { name: "Today's Purchases", count: '0', icon: ShoppingCart, color: 'text-indigo-600 bg-indigo-50' }
+    { 
+      name: "Today's Tokens", 
+      count: isLoading ? '...' : (stats?.todayTokens ?? 0), 
+      icon: ClipboardList, 
+      color: 'text-blue-600 bg-blue-50' 
+    },
+    { 
+      name: "Today's Patients", 
+      count: isLoading ? '...' : (stats?.todayPatients ?? 0), 
+      icon: Users, 
+      color: 'text-green-600 bg-green-50' 
+    },
+    { 
+      name: "Low Stock Items", 
+      count: isLoading ? '...' : (stats?.lowStockItems ?? 0), 
+      icon: Package, 
+      color: 'text-amber-600 bg-amber-50' 
+    },
+    { 
+      name: "Today's Purchases", 
+      count: isLoading ? '...' : (stats?.todayPurchases ?? 0), 
+      icon: ShoppingCart, 
+      color: 'text-indigo-600 bg-indigo-50' 
+    }
   ];
 
   return (
